@@ -16,6 +16,8 @@
   }
 </style>
 
+<a href="{% url 'app:create' %}" class="btn btn-primary">新規作成</a>
+
 <div align="center">
   <a href="{% url 'app:month_with_schedule' month_previous.year month_previous.month %}">
     前月
@@ -50,16 +52,16 @@
 
           {% for schedule in schedules %}
           <li>({{ schedule.get_place_display }})</li>
-          {% if schedule.category_pectoral == 'checked' %}
+          {% if schedule.category_pectoral %}
           <li style="color:red">胸筋</li>
           {% endif %}
-          {% if schedule.category_abs == 'checked' %}
+          {% if schedule.category_abs %}
           <li style="color:blue">腹筋</li>
           {% endif %}
-          {% if schedule.category_spine == 'checked' %}
+          {% if schedule.category_spine %}
           <li style="color:green">背筋</li>
           {% endif %}
-          {% if schedule.category_run == 'checked' %}
+          {% if schedule.category_run %}
           <li style="color:orange">ラン</li>
           {% endif %}
           {% endfor %}
@@ -73,4 +75,7 @@
     {% endfor %}
   </tbody>
 </table>
+
+
+
 {% endblock %}

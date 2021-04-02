@@ -5,11 +5,11 @@ PLACE = (('house', '家'), ('gym', 'ジム'))
 
 class Record(models.Model):
     date = models.DateField('日付')
-    place = models.CharField(max_length=100, choices=PLACE, default='house')
-    category_pectoral = models.CharField(max_length=100, default='unchecked')
-    category_abs = models.CharField(max_length=100, default='unchecked')
-    category_spine = models.CharField(max_length=100, default='unchecked')
-    category_run = models.CharField(max_length=100, default='unchecked')
+    place = models.CharField(verbose_name='場所', max_length=100, choices=PLACE, default='house')
+    category_pectoral = models.BooleanField(verbose_name='胸筋', default=False)
+    category_abs = models.BooleanField(verbose_name='腹筋', default=False)
+    category_spine = models.BooleanField(verbose_name='背筋', default=False)
+    category_run = models.BooleanField(verbose_name='ラン', default=False)
 
     def __str__(self):
         return self.date.strftime('%Y/%m/%d')
