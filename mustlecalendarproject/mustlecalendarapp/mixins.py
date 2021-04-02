@@ -1,5 +1,6 @@
 import calendar
 import datetime
+import itertools
 
 
 class MonthCalendarMixin:
@@ -39,6 +40,35 @@ class MonthCalendarMixin:
             'month_current': current_month,
             'month_previous': self.get_previous_month(current_month),
             'month_next': self.get_next_month(current_month),
-            'weak_names': ['月', '火', '水', '木', '金', '土', '日']
+            'week_names': ['月', '火', '水', '木', '金', '土', '日'],
         }
         return calendar_data
+
+
+class MonthWithScheduleMixin(MonthCalendarMixin):
+    def get_month_schedules(self, start, end, days):
+        query = {
+            'date__range': (start, end)
+        }
+        result = self.model.objects.filter(**query)
+
+        day_schedules = {day: [] for week in days for day in week}
+        for schedule in result:
+            schedule_date = getattr(schedule, 'date')
+            day_schedules[schedule_date].append(schedule)
+
+        size = len(day_schedules)
+        # 一か月のスケジュールを7日ごとに保持
+        return [{key: day_schedules[key] for key in itertools.islice(day_schedules, i, i+7)} for i in range(0, size, 7)]
+
+    def get_month_calendar(self):
+        calendar_context = super().get_month_calendar()
+        month_days = calendar_context['month_days']
+        month_first = month_days[0][0]
+        month_last = month_days[-1][-1]
+        calendar_context['month_day_schedules'] = self.get_month_schedules(
+            month_first,
+            month_last,
+            month_days
+        )
+        return calendar_context

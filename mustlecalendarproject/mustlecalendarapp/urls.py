@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-from .views import MonthCalendar
+from .views import MonthWithScheduleCalendar
 
 app_name = 'app'
 
 urlpatterns = [
-    path('', MonthCalendar.as_view(), name='default'),
-    path('month/<int:year>/<int:month>/', MonthCalendar.as_view(), name='month')
+    path('', MonthWithScheduleCalendar.as_view(), name='month_with_schedule'),
+    path('month_with_schedule/<int:year>/<int:month>/', MonthWithScheduleCalendar.as_view(), name='month_with_schedule')
 ]
