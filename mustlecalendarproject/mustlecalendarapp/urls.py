@@ -1,6 +1,10 @@
 from django.contrib import admin
 from django.urls import path
+from .views import MonthCalendar
+
+app_name = 'app'
 
 urlpatterns = [
-    path('admin/', admin.site.urls)
+    path('', MonthCalendar.as_view(), name='default'),
+    path('month/<int:year>/<int:month>/', MonthCalendar.as_view(), name='month')
 ]
