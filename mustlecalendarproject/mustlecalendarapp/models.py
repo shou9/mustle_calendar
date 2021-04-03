@@ -1,6 +1,7 @@
 from django.db import models
+from django.urls import reverse
 
-PLACE = (('house', '家'), ('gym', 'ジム'))
+PLACE = (('house', '家'), ('gym', 'ジ'))
 
 
 class Record(models.Model):
@@ -13,3 +14,6 @@ class Record(models.Model):
 
     def __str__(self):
         return self.date.strftime('%Y/%m/%d')
+
+    def get_absolute_url(self):
+        return reverse('app:month_with_schedule')

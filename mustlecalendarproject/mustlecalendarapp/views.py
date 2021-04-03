@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
 from .mixins import MonthCalendarMixin, MonthWithScheduleMixin
 from .models import Record
+from bootstrap_datepicker_plus import DateTimePickerInput
 
 
 class MonthWithScheduleCalendar(MonthWithScheduleMixin, TemplateView):
@@ -21,3 +22,8 @@ class ScheduleCreate(CreateView):
     model = Record
     fields = ('date', 'place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run')
     success_url = reverse_lazy('app:month_with_schedule')
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['date'].widget = DateTimePickerInput(format='%Y-%m-%d')
+        return form

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mustlecalendarapp.apps.MustlecalendarappConfig',
-    'bootstrap_datepicker_plus'
+    'bootstrap_datepicker_plus',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
@@ -100,6 +101,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 
 
 # Internationalization
