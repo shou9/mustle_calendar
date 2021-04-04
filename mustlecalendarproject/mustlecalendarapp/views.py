@@ -37,10 +37,6 @@ class ScheduleCreate(CreateView):
         initial["date"] = datetime.date.today()
         return initial
 
-    @property
-    def get_verbose_name(self):
-        return self.model._meta.verbose_name
-
 
 class ScheduleUpdate(UpdateView):
     template_name = 'update.html'
