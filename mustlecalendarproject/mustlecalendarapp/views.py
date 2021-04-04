@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
 from .mixins import MonthCalendarMixin, MonthWithScheduleMixin
 from .models import Record
 from bootstrap_datepicker_plus import DateTimePickerInput
 import datetime
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
 class MonthWithScheduleCalendar(MonthWithScheduleMixin, TemplateView):
@@ -47,3 +51,29 @@ class ScheduleDetail(DetailView):
     model = Record
     fields = ('date', 'place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run')
     success_url = reverse_lazy('app:month_with_schedule')
+
+
+def signupview(request):
+    if request.method == 'POST':
+        username_data = request.POST['username_data']
+        password_data = request.POST['password_data']
+        # userが重複している場合にエラーをだす
+        try:
+            user = User.objects.create_user(username_data, '', password_data)
+        except IntegrityError:
+            return render(request, 'signup.html', {'error': 'このユーザーは既に登録されています。'})
+
+    return render(request, 'signup.html', {})
+
+
+def loginview(request):
+    if request.method == 'POST':
+        username_data = request.POST['username_data']
+        password_data = request.POST['password_data']
+        user = authenticate(request, username=username_data, password=password_data)
+        if user is not None:
+            login(request, user)
+            return redirect('app:month_with_schedule')
+        else:
+            return redirect('app:login')
+    return render(request, 'login.html')
