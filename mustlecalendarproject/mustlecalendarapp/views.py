@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
 from .mixins import MonthCalendarMixin, MonthWithScheduleMixin
@@ -47,3 +47,9 @@ class ScheduleDetail(DetailView):
     model = Record
     fields = ('date', 'place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run')
     success_url = reverse_lazy('app:month_with_schedule')
+
+
+def delete_data(request, pk):
+    if request.method == 'POST':
+        Record.objects.filter(id=pk).delete()
+    return redirect('app:month_with_schedule')
