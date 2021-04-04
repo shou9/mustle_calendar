@@ -4,6 +4,7 @@ from django.views.generic import TemplateView, CreateView, UpdateView, DetailVie
 from .mixins import MonthCalendarMixin, MonthWithScheduleMixin
 from .models import Record
 from bootstrap_datepicker_plus import DateTimePickerInput
+import datetime
 
 
 class MonthWithScheduleCalendar(MonthWithScheduleMixin, TemplateView):
@@ -27,6 +28,11 @@ class ScheduleCreate(CreateView):
         form = super().get_form()
         form.fields['date'].widget = DateTimePickerInput(format='%Y-%m-%d')
         return form
+
+    def get_initial(self):
+        initial = super().get_initial()
+        initial["date"] = datetime.date.today()
+        return initial
 
 
 class ScheduleUpdate(UpdateView):
