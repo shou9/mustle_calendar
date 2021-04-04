@@ -65,6 +65,7 @@ def signupview(request):
         # userが重複している場合にエラーをだす
         try:
             user = User.objects.create_user(username_data, '', password_data)
+            return redirect('app:login')
         except IntegrityError:
             return render(request, 'signup.html', {'error': 'このユーザーは既に登録されています。'})
 
