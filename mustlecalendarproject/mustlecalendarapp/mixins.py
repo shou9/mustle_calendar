@@ -52,14 +52,15 @@ class MonthWithScheduleMixin(MonthCalendarMixin):
         }
         result = self.model.objects.filter(**query)
 
-        day_schedules = {day: [] for week in days for day in week}
+        day_schedule = {day: [] for week in days for day in week}
         for schedule in result:
             schedule_date = getattr(schedule, 'date')
-            day_schedules[schedule_date].append(schedule)
+            day_schedule[schedule_date] = schedule
 
-        size = len(day_schedules)
+        size = len(day_schedule)
         # 一か月のスケジュールを7日ごとに保持
-        return [{key: day_schedules[key] for key in itertools.islice(day_schedules, i, i+7)} for i in range(0, size, 7)]
+        schedule = [{key: day_schedule[key] for key in itertools.islice(day_schedule, i, i+7)} for i in range(0, size, 7)]
+        return schedule
 
     def get_month_calendar(self):
         calendar_context = super().get_month_calendar()

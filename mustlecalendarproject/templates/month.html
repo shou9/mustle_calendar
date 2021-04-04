@@ -38,9 +38,9 @@
   </thead>
 
   <tbody>
-    {% for day_schedules in month_day_schedules %}
+    {% for day_schedule in month_day_schedules %}
     <tr>
-      {% for day, schedules in day_schedules.items %}
+      {% for day, schedule in day_schedule.items %}
       {% if now == day %}
       <td class="table-success">
         {% else %}
@@ -48,9 +48,10 @@
         {% endif %}
         <div>
           {% if month_current.month == day.month %}
-          {{ day.day }}
-
-          {% for schedule in schedules %}
+          {% if schedule %}
+          <a href="{% url 'app:detail' schedule.id %}">
+            {{ day.day }}
+          </a>
           <li>({{ schedule.get_place_display }})</li>
           {% if schedule.category_pectoral %}
           <li style="color:red">胸筋</li>
@@ -64,12 +65,12 @@
           {% if schedule.category_run %}
           <li style="color:orange">ラン</li>
           {% endif %}
-          {% endfor %}
-
+          {% else %}
+          {{ day.day }}
+          {% endif %}
           {% endif %}
         </div>
       </td>
-
       {% endfor %}
     </tr>
     {% endfor %}

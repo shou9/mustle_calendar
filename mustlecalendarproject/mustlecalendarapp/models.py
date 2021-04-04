@@ -5,7 +5,7 @@ PLACE = (('house', '家'), ('gym', 'ジ'))
 
 
 class Record(models.Model):
-    date = models.DateField('日付', primary_key=True)
+    date = models.DateField('日付', unique=True)
     place = models.CharField(verbose_name='場所', max_length=100, choices=PLACE, default='house')
     category_pectoral = models.BooleanField(verbose_name='胸筋', default=False)
     category_abs = models.BooleanField(verbose_name='腹筋', default=False)

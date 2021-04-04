@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
 from .mixins import MonthCalendarMixin, MonthWithScheduleMixin
 from .models import Record
 from bootstrap_datepicker_plus import DateTimePickerInput
@@ -27,3 +27,17 @@ class ScheduleCreate(CreateView):
         form = super().get_form()
         form.fields['date'].widget = DateTimePickerInput(format='%Y-%m-%d')
         return form
+
+
+class ScheduleUpdate(UpdateView):
+    template_name = 'update.html'
+    model = Record
+    fields = ('place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run')
+    success_url = reverse_lazy('app:month_with_schedule')
+
+
+class ScheduleDetail(DetailView):
+    template_name = 'detail.html'
+    model = Record
+    fields = ('date', 'place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run')
+    success_url = reverse_lazy('app:month_with_schedule')
