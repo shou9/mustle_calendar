@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% if user.is_authenticated %}
+
 {{object.date|date:"Y/m/d"}}
 <li>{{object.get_place_display}}</li>
 {% if object.category_pectoral %}
@@ -17,5 +19,10 @@
 {% endif %}
 
 <a href="{% url 'app:update' object.pk %}" class="btn btn-primary">更新する</a>
+
+{% else %}
+ログインしてください
+<a href="{% url 'app:login' %}" class="btn btn-primary">ログイン</a>
+{% endif %}
 
 {% endblock %}

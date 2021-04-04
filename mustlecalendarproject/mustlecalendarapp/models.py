@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 PLACE = (('house', '家'), ('gym', 'ジ'))
 
@@ -11,6 +12,7 @@ class Record(models.Model):
     category_abs = models.BooleanField(verbose_name='腹筋', default=False)
     category_spine = models.BooleanField(verbose_name='背筋', default=False)
     category_run = models.BooleanField(verbose_name='ラン', default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, )
 
     def __str__(self):
         return self.date.strftime('%Y/%m/%d')

@@ -7,8 +7,7 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 import datetime
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 
 class MonthWithScheduleCalendar(MonthWithScheduleMixin, TemplateView):
@@ -25,7 +24,7 @@ class MonthWithScheduleCalendar(MonthWithScheduleMixin, TemplateView):
 class ScheduleCreate(CreateView):
     template_name = 'create.html'
     model = Record
-    fields = ('date', 'place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run')
+    fields = ('date', 'place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run', 'user')
     success_url = reverse_lazy('app:month_with_schedule')
 
     def get_form(self):
@@ -37,6 +36,10 @@ class ScheduleCreate(CreateView):
         initial = super().get_initial()
         initial["date"] = datetime.date.today()
         return initial
+
+    @property
+    def get_verbose_name(self):
+        return self.model._meta.verbose_name
 
 
 class ScheduleUpdate(UpdateView):
@@ -77,3 +80,8 @@ def loginview(request):
         else:
             return redirect('app:login')
     return render(request, 'login.html')
+
+
+def logoutview(request):
+    logout(request)
+    return redirect('app:login')

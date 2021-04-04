@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import MonthWithScheduleCalendar, ScheduleCreate, ScheduleUpdate, ScheduleDetail, signupview, loginview
+from .views import MonthWithScheduleCalendar, ScheduleCreate, ScheduleUpdate, ScheduleDetail, signupview, loginview, logoutview
 
 
 app_name = 'app'
@@ -12,5 +12,6 @@ urlpatterns = [
     path('update/<int:pk>/', ScheduleUpdate.as_view(), name='update'),
     path('detail/<int:pk>/', ScheduleDetail.as_view(), name='detail'),
     path('signup/', signupview, name='signup'),
-    path('login/', loginview, name='login')
+    path('login/', loginview, name='login'),
+    path('logout/', logoutview, name='logout'),
 ]
