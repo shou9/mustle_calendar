@@ -48,7 +48,8 @@ class MonthCalendarMixin:
 class MonthWithScheduleMixin(MonthCalendarMixin):
     def get_month_schedules(self, start, end, days):
         query = {
-            'date__range': (start, end)
+            'date__range': (start, end),
+            'user_id': self.request.user.id
         }
         result = self.model.objects.filter(**query)
 

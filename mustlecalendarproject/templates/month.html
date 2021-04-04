@@ -16,7 +16,10 @@
   }
 </style>
 
+{% if user.is_authenticated %}
+
 <a href="{% url 'app:create' %}" class="btn btn-primary">新規作成</a>
+<a href="{% url 'app:logout' %}" onclick='return confirm(" 本当にログアウトしますか?")' class="btn btn-primary">ログアウト</a>
 
 <div align="center">
   <a href="{% url 'app:month_with_schedule' month_previous.year month_previous.month %}">
@@ -77,6 +80,10 @@
   </tbody>
 </table>
 
+{% else %}
+ログインしてください
+<a href="{% url 'app:login' %}" class="btn btn-primary">ログイン</a>
+{% endif %}
 
 
 {% endblock %}
