@@ -97,7 +97,7 @@ def loginview(request):
             login(request, user)
             return redirect('app:month_with_schedule')
         else:
-            return redirect('app:login')
+            return render(request, 'login.html', {'error': 'ユーザー名、またはパスワードが違います。'})
     return render(request, 'login.html')
 
 

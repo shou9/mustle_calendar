@@ -42,7 +42,7 @@
 <form class="form-signin" method='post'>{% csrf_token %}
     <h1 class="h3 mb-3 fw-normal">新規登録</h1>
     {% if error %}
-    {{error}}
+    <div style="color:red; font-size: 13px; margin-left: 10px; margin-bottom: 5px">{{error}}</div>
     {% endif %}
 
     <div class="form-floating">
