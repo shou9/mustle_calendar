@@ -21,7 +21,7 @@ class Record(models.Model):
         ]
 
     def __str__(self):
-        return self.date.strftime('%Y/%m/%d')
+        return self.user.username + ' : ' + self.date.strftime('%Y/%m/%d')
 
     def get_absolute_url(self):
         return reverse('app:month_with_schedule')
