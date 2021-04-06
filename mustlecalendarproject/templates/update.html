@@ -8,15 +8,32 @@
         margin-right: auto;
         margin-top: 20px
     }
+
+    .site-header {
+        display: flex;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        justify-content: space-around;
+        background: gold;
+        height: 40px;
+        padding-top: 10px;
+        padding-bottom: 10px
+    }
 </style>
 
 {% if user.is_authenticated %}
 
-<form action="" method='POST'>{%csrf_token%}
-    {{ object.date|date:"Y/m/d" }}
+<header class="site-header">
+    スケジュール更新
+</header>
+
+<form action="" method='POST' style="margin-top:65px">{%csrf_token%}
+    <div style="margin-bottom: 20px">{{ object.date|date:"Y/m/d" }}</div>
     {{ form.as_p }}
-    <input type='submit' value='更新する'>
+    <input style="margin-top: 20px" type='submit' value='更新する'>
 </form>
+
 
 {% else %}
 <div class="login">

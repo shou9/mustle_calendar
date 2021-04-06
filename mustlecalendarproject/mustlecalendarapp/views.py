@@ -30,6 +30,12 @@ class ScheduleCreate(CreateView):
     def get_form(self):
         form = super().get_form()
         form.fields['date'].widget = DateTimePickerInput(format='%Y-%m-%d')
+        form.fields['place'].widget.attrs["style"] = "margin-left: 70px"
+        form.fields['category_pectoral'].widget.attrs["style"] = "margin-left: 95px"
+        form.fields['category_abs'].widget.attrs["style"] = "margin-left: 95px"
+        form.fields['category_spine'].widget.attrs["style"] = "margin-left: 95px"
+        form.fields['category_run'].widget.attrs["style"] = "margin-left: 95px"
+
         return form
 
     def get_initial(self):
@@ -43,6 +49,16 @@ class ScheduleUpdate(UpdateView):
     model = Record
     fields = ('place', 'category_pectoral', 'category_abs', 'category_spine', 'category_run')
     success_url = reverse_lazy('app:month_with_schedule')
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['place'].widget.attrs["style"] = "margin-left: 70px"
+        form.fields['category_pectoral'].widget.attrs["style"] = "margin-left: 95px"
+        form.fields['category_abs'].widget.attrs["style"] = "margin-left: 95px"
+        form.fields['category_spine'].widget.attrs["style"] = "margin-left: 95px"
+        form.fields['category_run'].widget.attrs["style"] = "margin-left: 95px"
+
+        return form
 
 
 class ScheduleDetail(DetailView):

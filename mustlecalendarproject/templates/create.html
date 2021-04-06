@@ -8,21 +8,53 @@
         margin-right: auto;
         margin-top: 20px
     }
+
+    .site-header {
+        display: flex;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        justify-content: space-around;
+        background: gold;
+        height: 40px;
+        padding-top: 10px;
+        padding-bottom: 10px
+    }
+
+    .date-picker {
+        margin-right: 100px;
+        margin-bottom: 20px;
+        margin-top: 70px;
+        margin-left: 100px;
+    }
 </style>
 
 {% if user.is_authenticated %}
-<form action="" method='POST'>{%csrf_token%}
 
+<header class="site-header">
+    スケジュール作成
+</header>
+
+<form action="" method='POST' style="margin-top:50px">{%csrf_token%}
     {% for f in form %}
     {% if f.name != 'user' %}
-    <p>{{ f.label }}</p>
-    <p>{{ f }}</p>
-    {{ form.media }}
+    {% if f.name == 'date' %}
+    <div class="date-picker">
+        {{ f }}
+        {{ form.media }}
+    </div>
+    {% else %}
+    <p>
+        {{ f.label }}
+        {{ f }}
+    </p>
+    {% endif %}
+
     {% endif %}
     {% endfor %}
 
     <input type='hidden' name='user' value={{ user.id }}>
-    <input type='submit' value='作成する'>
+    <input style="margin-top: 20px" type='submit' value='作成する'>
 </form>
 
 
