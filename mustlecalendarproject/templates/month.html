@@ -36,6 +36,13 @@
   .create-button {
     border-radius: 100%;
   }
+
+  .login {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px
+  }
 </style>
 
 {% if user.is_authenticated %}
@@ -116,8 +123,9 @@
 </footer>
 
 {% else %}
-ログインしてください
-<a href="{% url 'app:login' %}" class="btn btn-primary">ログイン</a>
+<div class="login">
+  <a href="{% url 'app:login' %}" class="btn btn-primary">ログイン</a>
+</div>
 {% endif %}
 
 
