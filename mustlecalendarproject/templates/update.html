@@ -31,7 +31,7 @@
 <form action="" method='POST' style="margin-top:65px">{%csrf_token%}
     <div style="margin-bottom: 20px">{{ object.date|date:"Y/m/d" }}</div>
     {{ form.as_p }}
-    <input style="margin-top: 20px" type='submit' value='更新する'>
+    <input style="margin-top: 20px" type='submit' class="btn btn-primary" value='更新する'>
 </form>
 
 
