@@ -8,6 +8,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 class MonthWithScheduleCalendar(MonthWithScheduleMixin, TemplateView):
@@ -42,6 +43,10 @@ class ScheduleCreate(CreateView):
         initial = super().get_initial()
         initial["date"] = datetime.date.today()
         return initial
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'この日付のスケジュールはすでに登録されています。')
+        return super().form_invalid(form)
 
 
 class ScheduleUpdate(UpdateView):
