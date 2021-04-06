@@ -8,31 +8,57 @@
         margin-right: auto;
         margin-top: 20px
     }
+
+    .site-header {
+        display: flex;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        justify-content: space-around;
+        background: gold;
+        height: 40px;
+        padding-top: 10px;
+        padding-bottom: 10px
+    }
 </style>
 
 {% if user.is_authenticated %}
 
-{{object.date|date:"Y/m/d"}}
-<li>{{object.get_place_display}}</li>
-{% if object.category_pectoral %}
-<li style="color:red">胸筋</li>
-{% endif %}
-{% if object.category_abs %}
-<li style="color:blue">腹筋</li>
-{% endif %}
-{% if object.category_spine %}
-<li style="color:green">背筋</li>
-{% endif %}
-{% if object.category_run %}
-<li style="color:orange">ラン</li>
-{% endif %}
+<header class="site-header">
+    スケジュール詳細
+</header>
 
-<a href="{% url 'app:update' object.pk %}" class="btn btn-primary">更新する</a>
+<div style="margin-top:150px">
 
-<form method="post" action="{% url 'app:delete' object.pk %}">{% csrf_token %}
-    <button class="btn btn-primary" type="submit" onclick='return confirm("本当に削除しますか？");'>削除する</button>
-</form>
+    <div class="card" style="margin-left: 20px; margin-right: 20px; margin-bottom: 30px">
+        <div class="card-header">
+            {{object.date|date:"Y/m/d"}} @{{object.get_place_display}}
+        </div>
+        <ul class="list-group list-group-flush">
+            {% if object.category_pectoral %}
+            <li class="list-group-item">胸筋</li>
+            {% endif %}
+            {% if object.category_abs %}
+            <li class="list-group-item">腹筋</li>
+            {% endif %}
+            {% if object.category_spine %}
+            <li class="list-group-item">背筋</li>
+            {% endif %}
+            {% if object.category_run %}
+            <li class="list-group-item">ラン</li>
+            {% endif %}
+        </ul>
+    </div>
+    <div>
+        <a href="{% url 'app:update' object.pk %}" class="btn btn-primary" style="margin-bottom: 10px">更新する</a>
 
+        <form method="post" action="{% url 'app:delete' object.pk %}">{% csrf_token %}
+            <button class="btn" style="background-color:red; color: white" type="submit"
+                onclick='return confirm("本当に削除しますか？");'>削除する</button>
+        </form>
+    </div>
+
+</div>
 {% else %}
 <div class="login">
     <a href="{% url 'app:login' %}" class="btn btn-primary">ログイン</a>
